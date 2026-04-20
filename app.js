@@ -1,9 +1,15 @@
-// initial setup for testing
+// initialize a database of IndexedDB
+let db;
+openDB().then(result => {
+  db = result;
+});
+
+
 const tree = new PhotoTree("Life");
 tree.addEra("Moscow/Childhood");
-tree.addEra("Moscow/Now");
-tree.addPhoto("first day", "", "Moscow/Childhood");
-console.log(tree.root);
+tree.addPhoto("First day", "", "Moscow/Childhood");
+tree.saveTree();
 
-tree.deletePhoto("first day", "Moscow/Childhood");
-console.log(tree.root);
+const tree2 = new PhotoTree("Life");
+tree2.loadTree();
+console.log(tree2.root);

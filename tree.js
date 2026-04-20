@@ -119,4 +119,32 @@ class PhotoTree {
 
     return false;
   }
+
+  // method to save data with JSON in LocalStorage
+  saveTree() {
+    localStorage.setItem("photoTree", JSON.stringify(this.root, (key, value) => {
+      if (key === "parent") return undefined;
+        return value;
+    }));
+  }
+
+  // helper to convert an object to a Node
+  reconstruct(object, parent) {
+    let node = new Node(object.name, parent);
+    // rewrite the array of items in the node
+    node.items.length = 0; 
+    node.items.push.apply(node.items, object.items);
+    node.itemCount = object.itemCount;
+    for (let i=0; i < object.children.length; i++) {
+      const childNode = this.reconstruct(object.children[i], node);
+      node.children.push(childNode);
+    }
+    return node;
+  }
+
+  // method to load data from JSON
+  loadTree() {
+    const data = JSON.parse(localStorage.getItem("photoTree"));
+    this.root = this.reconstruct(data, null)
+  }
 }
