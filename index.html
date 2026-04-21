@@ -7,11 +7,23 @@
 </head>
 <body>
   <svg id="tree-svg"></svg>
-  <button type="button" id="addPhoto" onclick="showFormPhoto()">+photo</button>
+  <button type="button" id="addPhoto">+photo</button>
   <button type="button" id="addEra">+add era</button>
-  <!-- FINISH WITH FORM SETUP -->
+ 
   <form id="formPhoto">
+  <label for="name">Photo Title:</label><br>
+  <input type="text" id="name" name="name"><br>
+  <label for="path">Path:</label><br>
+  <input type="text" id="path" name="path"><br>
+  <label for="file">Choose a photo:</label>
+  <input type="file" id="file" name="file" accept="image/png, image/jpeg" />
+  <input type="button" id="submitPhoto" value="Add Photo">
+  </form>
 
+  <form id="formEra">
+  <label for="name">Era path and name:</label><br>
+  <input type="text" id="era" name="era"><br>
+  <input type="button" id="submitEra" value="Add Era">
   </form>
 
   <script src="tree.js"></script>
