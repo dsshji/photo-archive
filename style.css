@@ -1,3 +1,8 @@
+html {
+  width: 80vw;
+  height: 80vh;
+}
+
 /* From Uiverse.io by TimTrayler */ 
 button {
   --hover-shadows: 8px 8px 12px #121212, -8px -8px 12px #303030;
@@ -23,12 +28,53 @@ button:active {
   box-shadow: var(--hover-shadows), var(--accent) 0px 0px 5px 5px;
   background-color: var(--accent);
   transform: scale(0.95);
+} 
+
+dialog {
+  width: 300px;
+  height: 220px;
+  border:#121212;
+  border-radius: 1.1em;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+#nodePopup {
+  width: 60vw;
+  height: 70vh;
+  max-height: 70vh;
+  overflow-y: auto;
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+#nodePopupPhotos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
-#formPhoto {
-  display: none;
+#nodePopupPhotos img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
 }
 
-#formEra {
-  display: none;
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.container div {
+  margin: 20px;
+  padding: 20px;
+  font-size: 30px;
+}
+
+/* Fix this */
+#closeBtnNode {
+  position: relative;
+  top: 13px;
+  right: 13px;
 }

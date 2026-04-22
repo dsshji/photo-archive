@@ -6,25 +6,42 @@
   <title>Photos of My Life</title>
 </head>
 <body>
+  <button id="reset">Reset Tree</button>
   <svg id="tree-svg"></svg>
   <button type="button" id="addPhoto">+photo</button>
   <button type="button" id="addEra">+add era</button>
  
-  <form id="formPhoto">
-  <label for="name">Photo Title:</label><br>
-  <input type="text" id="name" name="name"><br>
-  <label for="path">Path:</label><br>
-  <input type="text" id="path" name="path"><br>
-  <label for="file">Choose a photo:</label>
-  <input type="file" id="file" name="file" accept="image/png, image/jpeg" />
-  <input type="button" id="submitPhoto" value="Add Photo">
-  </form>
+  <dialog id="photoPopup">
+    <form id="formPhoto">
+    <label for="name">Photo Title:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="path">Path:</label><br>
+    <input type="text" id="path" name="path"><br>
+    <label for="file">Choose a photo:</label>
+    <div class="container">
+      <input type="file" id="file" name="file" accept="image/png, image/jpeg" />
+      <button type="button" id="submitPhoto">Add Photo</button>
+      <button id="closeBtnPhoto">Close</button>
+    </div>
+    </form>
+  </dialog>
 
-  <form id="formEra">
-  <label for="name">Era path and name:</label><br>
-  <input type="text" id="era" name="era"><br>
-  <input type="button" id="submitEra" value="Add Era">
-  </form>
+  <dialog id="eraPopup">
+    <form id="formEra">
+    <label for="name">Era path and name:</label><br>
+    <div class="container">
+      <input type="text" id="era" name="era"><br>
+      <button type="button" id="submitEra">Add Era</button>
+      <button id="closeBtnEra">Close</button>
+    </div>
+    </form>
+  </dialog>
+
+  <dialog id="nodePopup">
+    <button id="closeBtnNode">✕</button>
+    <h2 id="nodePopupTitle"></h2>
+    <div id="nodePopupPhotos"></div>
+  </dialog>
 
   <script src="tree.js"></script>
   <script src="storage.js"></script>

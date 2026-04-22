@@ -5,22 +5,18 @@ openDB().then(result => {
   db = result;
 });
 
-
-
-const width = 800;
-const height = 600;
+const width = 0.9*window.innerWidth;
+const height = 0.85*window.innerHeight;
 const margin = { top: 40, right: 40, bottom: 40, left: 40 };
 
 // test data
 const tree = new PhotoTree("Life");
-/*
-tree.addEra("Moscow/Childhood");
-tree.addEra("Moscow/Now");
-tree.addEra("Abu Dhabi");
-tree.addEra("Abu Dhabi/Eats");
-tree.addEra("Moscow/Childhood/Dance");
-tree.saveTree();
-*/
+const saved = localStorage.getItem("photoTree");
+if (saved) {
+  tree.loadTree();
+} else {
+  tree.saveTree();
+}
 
 // convert to D3 format
 const root = d3.hierarchy(tree.root);
@@ -77,7 +73,8 @@ function renderTree() {
           .translate(width/2, height/2)
           .scale(1.5)
           .translate(-d.x, -d.y)
-      );
+      )
+      openNodePopup(d);
     });
 
     // label nodes
@@ -99,22 +96,6 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-document.getElementById("addPhoto").addEventListener("click", (event) => {
-    showFormPhoto()
-});
-
-document.getElementById("addEra").addEventListener("click", (event) => {
-    showFormEra()
-});
-
-// DOUBLE CHECK -- FINISH FORM SETUP
-function showFormPhoto() {
-  document.getElementById('formPhoto').style.display = 'block'
-  document.getElementById("submitPhoto").addEventListener("click", (event) => {
-    addPhoto()
-  });
-};
-
 function addPhoto() {
   const form = document.getElementById("formPhoto");
   const name = form.elements["name"].value;
@@ -123,21 +104,60 @@ function addPhoto() {
   const id = `${path}_${name}`.replace(/\//g, "_");
   saveImage(db, id, file);
   tree.addPhoto(name, id, path);
+  document.getElementById("photoPopup").close();
   tree.saveTree();
   renderTree();
-};
-
-function showFormEra() {
-  document.getElementById('formEra').style.display = 'block'
-  document.getElementById("submitEra").addEventListener("click", (event) => {
-    addEra()
-  }); 
 };
 
 function addEra() {
   const form = document.getElementById("formEra");
   const era = form.elements["era"].value
+  document.getElementById("eraPopup").close();
   tree.addEra(era)
   tree.saveTree();
   renderTree();
 };
+
+function resetTree() {
+  localStorage.removeItem("photoTree");
+  location.reload();
+}
+
+document.getElementById("reset").addEventListener("click", () => {
+  resetTree();
+});
+
+// photo dialog
+document.getElementById("addPhoto").addEventListener("click", () => {
+  document.getElementById("photoPopup").showModal();
+});
+document.getElementById("closeBtnPhoto").addEventListener("click", () => {
+  document.getElementById("photoPopup").close();
+});
+document.getElementById("submitPhoto").addEventListener("click", addPhoto);
+
+// era dialog
+document.getElementById("addEra").addEventListener("click", () => {
+  document.getElementById("eraPopup").showModal();
+});
+document.getElementById("closeBtnEra").addEventListener("click", () => {
+  document.getElementById("eraPopup").close();
+});
+document.getElementById("submitEra").addEventListener("click", addEra);
+
+// node popups with photos
+async function openNodePopup(node) {
+  document.getElementById("nodePopupTitle").textContent = node.data.name;
+  document.getElementById("nodePopupPhotos").innerHTML = "";
+  for (let photo of node.data.items) {
+    const result = await getImage(db, photo.src);
+    const src = URL.createObjectURL(result.file);
+    const img = document.createElement("img");
+    img.src = src;
+    document.getElementById("nodePopupPhotos").append(img);
+  }
+  document.getElementById("nodePopup").showModal();
+};
+document.getElementById("closeBtnNode").addEventListener("click", () => {
+  document.getElementById("nodePopup").close();
+});
