@@ -21,6 +21,13 @@ html {
   font-style: normal;
 }
 
+header {
+  margin-bottom: auto;
+}
+
+footer {
+  margin-top: auto;
+}
 
 
 h1 {color:#ffffff; font-family: "Archivo Black", sans-serif;}
@@ -38,6 +45,7 @@ p {color:#ffffff; font-weight: 100; font-family: "Roboto Mono", monospace;}
 }
 
 .page-title {
+  text-align: center;
   align-self: center;
   font-size: clamp(2rem, 10vw, 10rem);
   margin: 0.25rem 0 0;
@@ -110,6 +118,36 @@ a {
   color: #ffffff;
 }
 
+.button {
+  color:#032D68;
+}
+
+.button-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  position: fixed; 
+  left: 2rem; 
+  top: 50%; 
+  transform: translateY(-50%)
+}
+
+@media (max-width: 1220px) {
+
+  .button-cont {
+    /* mobile: bottom bar */
+    position: absolute;
+    left: 0;
+    bottom: 4.3rem;
+    top: auto;
+    transform: none;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
 button {
  position: relative;
  display: inline-block;
@@ -125,7 +163,7 @@ button {
 }
 
 button.main-button {
- width: 12rem;
+ width: 7.3rem;
  height: auto;
 }
 
@@ -134,10 +172,10 @@ button.main-button .circle {
  position: relative;
  display: block;
  margin: 0;
- width: 3rem;
- height: 3rem;
+ width: 1.5rem;
+ height: 1.5rem;
+ border-radius: 0.8125rem;
  background: #ffffff;
- border-radius: 1.625rem;
 }
 
 button.main-button .circle .icon {
@@ -151,37 +189,39 @@ button.main-button .circle .icon {
 
 button.main-button .circle .icon.arrow {
  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
- left: 0.625rem;
- width: 1.125rem;
- height: 0.125rem;
+ left: 0.3125rem;
+ width: 0.5625rem;
+ height: 0.0625rem;
  background: none;
 }
 
 button.main-button .circle .icon.arrow::before {
  position: absolute;
  content: "";
- top: -0.29rem;
- right: 0.0625rem;
- width: 0.625rem;
- height: 0.625rem;
- border-top: 0.125rem solid #032D68;
- border-right: 0.125rem solid #032D68;
+ top: -0.145rem;
+ right: 0.03125rem;
+ width: 0.3125rem;
+ height: 0.3125rem;
+ border-top: 0.0625rem solid #032D68;
+ border-right: 0.0625rem solid #032D68;
  transform: rotate(45deg);
 }
 
 button.main-button .button-text {
  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ font-family: "Archivo Black", sans-serif;
  position: absolute;
  top: 0;
  left: 0;
  right: 0;
  bottom: 0;
- padding: 0.75rem 0;
- margin: 0 0 0 1.85rem;
+ font-size: 0.75rem;
  color: #ffffff;
  font-weight: 700;
- line-height: 1.6;
- text-align: center;
+ line-height: 2;
+ margin-left: 2rem;
+ vertical-align: center;
+ text-align: left;
  text-transform: uppercase;
 }
 
@@ -191,7 +231,7 @@ button:hover .circle {
 
 button:hover .circle .icon.arrow {
  background: #032D68;
- transform: translate(1rem, 0);
+ transform: translate(0.5rem, 0);
 }
 
 button:hover .button-text {
@@ -199,23 +239,30 @@ button:hover .button-text {
 }
 
 dialog {
-  width: 300px;
-  height: 220px;
-  border:#121212;
+  background-color: #032D68;
+  border: 1px solid #ffffff;
   border-radius: 1.1em;
-  font-weight: bold;
-  letter-spacing: 0.1em;
+  padding: 0;
 }
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
 #nodePopup {
   width: 60vw;
   height: 70vh;
   max-height: 70vh;
   overflow-y: auto;
-  border: none;
   border-radius: 12px;
   padding: 24px;
   box-sizing: border-box;
 }
+
+#nodePopupTitle {
+  margin: 0 0 1rem;
+}
+
 #nodePopupPhotos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -228,21 +275,175 @@ dialog {
   object-fit: cover;
 }
 
-.container {
+
+.svg-cont {
+  align-self: center;
+  width: 75vw;
+  height: 90vh;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 3px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1220px) {
+  .svg-cont {  width: 75vw; height: 70vh;}
+}
+
+#tree-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tree-node {
+  fill: #ffffff;
+  stroke: #032D68;
+}
+
+.tree-link {
+  stroke: #ffffff;
+}
+
+.tree-label {
+  fill: #ffffff;
+  font-family: "Archivo Black", sans-serif;
+}
+
+/*
+@media (max-width: 600px) {
+  .button-cont {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+  }
+}
+
+*/
+
+#photoPopup {
+  width: 28rem;
+  max-width: 90vw;
+  height: 58vh;
+  max-height: 90vh;
+}
+#eraPopup {
+  width: 28rem;
+  max-width: 90vw;
+  height: 37vh;
+  max-height: 90vh;
+}
+
+.form {
+  background-color: #032D68;
+  padding: 2rem;
   display: flex;
-  justify-content: space-evenly;
-  align-items: flex-end;
-}
-
-.container div {
-  margin: 20px;
-  padding: 20px;
-  font-size: 30px;
-}
-
-/* Fix this */
-#closeBtnNode {
+  flex-direction: column;
+  gap: 0.75rem;
   position: relative;
-  top: 13px;
-  right: 13px;
+  border-radius: 1.1em;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.45rem;
+  line-height: 1;
+  opacity: 0.75;
+  border: none;
+}
+
+.dialog-close:hover {
+  opacity: 1;
+}
+
+.title {
+  text-align: center;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 1.4rem;
+  color: #fff;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.label {
+  color: #ffffff;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin-bottom: -0.25rem;
+}
+
+.form-input {
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.form-input:focus {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 0.4rem;
+  transition: background 0.2s, border-color 0.2s;
+  text-align: center;
+}
+
+.upload-area:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: #ffffff;
+}
+
+.upload-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.upload-text {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 0.85rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.file-name {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+#file {
+  display: none;
 }

@@ -5,9 +5,10 @@ openDB().then(result => {
   db = result;
 });
 
-const width = 0.9*window.innerWidth;
-const height = 0.85*window.innerHeight;
-const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+const cont = document.getElementById("tree-cont");
+const width = cont.clientWidth;
+const height = cont.clientHeight;
+const margin = { top: 10, right: 10, bottom: 10, left: 10 };
 
 // test data
 const tree = new PhotoTree("Life");
@@ -56,7 +57,8 @@ function renderTree() {
     .attr("y1", d => d.source.y)
     .attr("x2", d => d.target.x)
     .attr("y2", d => d.target.y)
-    .attr("stroke", "black");
+    .attr("stroke", "black")
+    .attr("class", "tree-link");
 
   // draw circles for nodes
   g.selectAll("circle")
@@ -65,7 +67,8 @@ function renderTree() {
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
     .attr("r", 10)
-    .attr("fill", "steelblue")
+    .attr("class", "tree-node")
+    //.attr("fill", "steelblue")
     .on("click", (event, d) => {
       svg.transition()
       .duration(750)
@@ -85,6 +88,7 @@ function renderTree() {
     .attr("y", d => d.y - 15)
     .attr("text-anchor", "middle")
     .text(d => d.data.name)
+    .attr("class", "tree-label");
 }
 renderTree();
 
@@ -98,13 +102,16 @@ document.addEventListener("keydown", (event) => {
 
 function addPhoto() {
   const form = document.getElementById("formPhoto");
-  const name = form.elements["name"].value;
   const path = form.elements["path"].value;
   const file = form.elements["file"].files[0];
+  if (!file) return;
+  const name = file.name.replace(/\.[^/.]+$/, "");
   const id = `${path}_${name}`.replace(/\//g, "_");
   saveImage(db, id, file);
   tree.addPhoto(name, id, path);
   document.getElementById("photoPopup").close();
+  document.getElementById("fileName").textContent = "NO FILE SELECTED";
+  form.reset();
   tree.saveTree();
   renderTree();
 };
@@ -130,6 +137,10 @@ document.getElementById("reset").addEventListener("click", () => {
 // photo dialog
 document.getElementById("addPhoto").addEventListener("click", () => {
   document.getElementById("photoPopup").showModal();
+});
+document.getElementById("file").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  document.getElementById("fileName").textContent = file ? file.name : "NO FILE SELECTED";
 });
 document.getElementById("closeBtnPhoto").addEventListener("click", () => {
   document.getElementById("photoPopup").close();
