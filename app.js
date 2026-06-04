@@ -8,7 +8,7 @@ openDB().then(result => {
 const cont = document.getElementById("tree-cont");
 const width = cont.clientWidth;
 const height = cont.clientHeight;
-const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+const margin = { top: 40, right: 60, bottom: 40, left: 60 };
 
 // test data
 const tree = new PhotoTree("Life");
@@ -130,9 +130,32 @@ function resetTree() {
   location.reload();
 }
 
-document.getElementById("reset").addEventListener("click", () => {
-  resetTree();
+function showConfirm(message) {
+  return new Promise((resolve) => {
+    document.getElementById("confirmMessage").textContent = message;
+    const popup = document.getElementById("confirmPopup");
+    popup.showModal();
+    document.getElementById("confirmOk").addEventListener("click", () => {
+      popup.close(); resolve(true);
+    }, { once: true });
+    document.getElementById("confirmCancel").addEventListener("click", () => {
+      popup.close(); resolve(false);
+    }, { once: true });
+  });
+}
+
+document.getElementById("reset").addEventListener("click", async () => {
+  if (await showConfirm("Are you sure you want to reset the tree?")) resetTree();
 });
+
+function delEra() {
+  const form = document.getElementById("formDel");
+  const path = form.elements["delPath"].value
+  document.getElementById("delPopup").close();
+  tree.deleteEra(path)
+  tree.saveTree();
+  renderTree();
+};
 
 // photo dialog
 document.getElementById("addPhoto").addEventListener("click", () => {
@@ -156,19 +179,64 @@ document.getElementById("closeBtnEra").addEventListener("click", () => {
 });
 document.getElementById("submitEra").addEventListener("click", addEra);
 
+// delete era dialog
+document.getElementById("delEra").addEventListener("click", () => {
+  document.getElementById("delPopup").showModal();
+});
+document.getElementById("closeBtnDel").addEventListener("click", () => {
+  document.getElementById("delPopup").close();
+});
+document.getElementById("submitDel").addEventListener("click", async () => {
+  if (await showConfirm("Are you sure you want to delete the era?")) delEra();
+});
+
 // node popups with photos
 async function openNodePopup(node) {
   document.getElementById("nodePopupTitle").textContent = node.data.name;
   document.getElementById("nodePopupPhotos").innerHTML = "";
-  for (let photo of node.data.items) {
-    const result = await getImage(db, photo.src);
-    const src = URL.createObjectURL(result.file);
+
+  const count = node.data.items.length;
+  const cols = Math.min(count, 3);
+  document.getElementById("nodePopupPhotos").style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+  if (node.data.items.length === 0) {
+    const empty = document.createElement("p");
+    empty.textContent = "NO PHOTOS HERE YET!";
+    empty.className = "empty-text";
+    document.getElementById("nodePopupPhotos").append(empty);
+  } else {
+    for (let photo of node.data.items) {
+      const result = await getImage(db, photo.src);
+      const src = URL.createObjectURL(result.file); 
+
+    const wrapper = document.createElement("div");
     const img = document.createElement("img");
+    const delBut = document.createElement("button");
+
+    wrapper.className = "photo-wrapper";
+
     img.src = src;
-    document.getElementById("nodePopupPhotos").append(img);
+    delBut.textContent = "✕";
+    delBut.className = "delete-photo-btn";
+
+    delBut.onclick = async () => {
+      if (await showConfirm("Are you sure you want to delete the photo?")) {
+        document.getElementById("nodePopup").close();
+        tree.deletePhoto(photo.name, photo.path);
+        removeImage(db, photo.src);
+        tree.saveTree();
+        renderTree();
+      }
+    };
+
+    wrapper.append(img);
+    wrapper.append(delBut);
+    document.getElementById("nodePopupPhotos").append(wrapper);
+    }
   }
   document.getElementById("nodePopup").showModal();
 };
+
 document.getElementById("closeBtnNode").addEventListener("click", () => {
   document.getElementById("nodePopup").close();
 });

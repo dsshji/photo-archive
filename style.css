@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
-
 html {
   width: 100vw;
   height: 100vh;
@@ -28,7 +27,6 @@ header {
 footer {
   margin-top: auto;
 }
-
 
 h1 {color:#ffffff; font-family: "Archivo Black", sans-serif;}
 h2 {color:#ffffff; font-family: "Archivo Black", sans-serif;}
@@ -125,18 +123,16 @@ a {
 .button-cont {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  position: fixed; 
-  left: 2rem; 
-  top: 50%; 
-  transform: translateY(-50%)
+  justify-content: space-around;
+  gap: 0.8rem;
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-@media (max-width: 1220px) {
-
+@media (max-width: 1230px) {
   .button-cont {
-    /* mobile: bottom bar */
     position: absolute;
     left: 0;
     bottom: 4.3rem;
@@ -148,94 +144,117 @@ a {
   }
 }
 
+.photo-wrapper {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
 button {
- position: relative;
- display: inline-block;
- cursor: pointer;
- outline: none;
- border: 0;
- vertical-align: middle;
- text-decoration: none;
- background: transparent;
- padding: 0;
- font-size: inherit;
- font-family: inherit;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.delete-photo-btn {
+  position: absolute !important;
+  top: 6px;
+  right: 6px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button.main-button {
- width: 7.3rem;
- height: auto;
+  width: 7.3rem;
+  height: auto;
 }
 
 button.main-button .circle {
- transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
- position: relative;
- display: block;
- margin: 0;
- width: 1.5rem;
- height: 1.5rem;
- border-radius: 0.8125rem;
- background: #ffffff;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.8125rem;
+  background: #ffffff;
 }
 
 button.main-button .circle .icon {
- transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
- position: absolute;
- top: 0;
- bottom: 0;
- margin: auto;
- background: #032D68;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #032D68;
 }
 
 button.main-button .circle .icon.arrow {
- transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
- left: 0.3125rem;
- width: 0.5625rem;
- height: 0.0625rem;
- background: none;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.3125rem;
+  width: 0.5625rem;
+  height: 0.0625rem;
+  background: none;
 }
 
 button.main-button .circle .icon.arrow::before {
- position: absolute;
- content: "";
- top: -0.145rem;
- right: 0.03125rem;
- width: 0.3125rem;
- height: 0.3125rem;
- border-top: 0.0625rem solid #032D68;
- border-right: 0.0625rem solid #032D68;
- transform: rotate(45deg);
+  position: absolute;
+  content: "";
+  top: -0.145rem;
+  right: 0.03125rem;
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-top: 0.0625rem solid #032D68;
+  border-right: 0.0625rem solid #032D68;
+  transform: rotate(45deg);
 }
 
 button.main-button .button-text {
- transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
- font-family: "Archivo Black", sans-serif;
- position: absolute;
- top: 0;
- left: 0;
- right: 0;
- bottom: 0;
- font-size: 0.75rem;
- color: #ffffff;
- font-weight: 700;
- line-height: 2;
- margin-left: 2rem;
- vertical-align: center;
- text-align: left;
- text-transform: uppercase;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  font-family: "Archivo Black", sans-serif;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 0.7rem;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 2;
+  margin-left: 2rem;
+  vertical-align: center;
+  text-align: left;
+  text-transform: uppercase;
 }
 
 button:hover .circle {
- width: 100%;
+  width: 100%;
 }
 
 button:hover .circle .icon.arrow {
- background: #032D68;
- transform: translate(0.5rem, 0);
+  background: #032D68;
+  transform: translate(0.5rem, 0);
 }
 
 button:hover .button-text {
- color: #032D68;
+  color: #032D68;
 }
 
 dialog {
@@ -251,9 +270,9 @@ dialog::backdrop {
 
 #nodePopup {
   width: 60vw;
-  height: 70vh;
-  max-height: 70vh;
-  overflow-y: auto;
+  height: fit-content;
+  max-height: 75vh;
+  overflow: auto;
   border-radius: 12px;
   padding: 24px;
   box-sizing: border-box;
@@ -265,16 +284,17 @@ dialog::backdrop {
 
 #nodePopupPhotos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 #nodePopupPhotos img {
   width: 100%;
-  aspect-ratio: 1;
+  max-height: 60vh;
   object-fit: cover;
+  display: block;
 }
-
 
 .svg-cont {
   align-self: center;
@@ -287,7 +307,10 @@ dialog::backdrop {
 }
 
 @media (max-width: 1220px) {
-  .svg-cont {  width: 75vw; height: 70vh;}
+  .svg-cont {
+    width: 75vw;
+    height: 70vh;
+  }
 }
 
 #tree-svg {
@@ -310,30 +333,17 @@ dialog::backdrop {
   font-family: "Archivo Black", sans-serif;
 }
 
-/*
-@media (max-width: 600px) {
-  .button-cont {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 1rem 0;
-  }
-}
-
-*/
-
 #photoPopup {
   width: 28rem;
   max-width: 90vw;
-  height: 58vh;
+  height: 62vh;
   max-height: 90vh;
 }
+
 #eraPopup {
   width: 28rem;
   max-width: 90vw;
-  height: 37vh;
+  height: 40vh;
   max-height: 90vh;
 }
 
@@ -438,6 +448,13 @@ dialog::backdrop {
   margin: 0;
 }
 
+.empty-text {
+  color: #ffffff;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
 .file-name {
   font-family: "Roboto Mono", monospace;
   font-size: 0.75rem;
@@ -446,4 +463,46 @@ dialog::backdrop {
 
 #file {
   display: none;
+}
+
+#confirmPopup {
+  width: 22rem;
+  max-width: 90vw;
+}
+
+.confirm-message {
+  text-align: center;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0 0 1.5rem;
+}
+
+.confirm-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.confirm-buttons .arrange-btn {
+  flex: 1;
+  margin-top: 0;
+}
+
+.confirm-no-btn {
+  flex: 1;
+  padding: 0.75rem;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-family: "Archivo Black", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.confirm-no-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
 }

@@ -43,6 +43,13 @@
       <span class="button-text">ADD ERA</span>
     </button>
 
+    <button class="main-button" id="delEra">
+      <span class="circle" aria-hidden="true">
+      <span class="icon arrow"></span>
+      </span>
+      <span class="button-text">DELETE ERA</span>
+    </button>
+
     <!--
     <button class="main-button" id="export">
       <span class="circle" aria-hidden="true">
@@ -87,6 +94,26 @@
       <input type="text" id="era" name="era" class="form-input" placeholder="e.g. Childhood/School">
       <button type="button" id="submitEra" class="arrange-btn">ADD</button>
     </form>
+  </dialog>
+
+  <dialog id="delPopup">
+    <form class="form" id="formDel">
+      <button type="button" id="closeBtnDel" class="dialog-close">✕</button>
+      <span class="title">DELETE ERA</span>
+      <label for="delPath" class="label">ERA PATH</label>
+      <input type="text" id="delPath" name="delPath" class="form-input" placeholder="e.g. Childhood/School">
+      <button type="button" id="submitDel" class="arrange-btn">DELETE</button>
+    </form>
+  </dialog>
+
+  <dialog id="confirmPopup">
+    <div class="form">
+      <p id="confirmMessage" class="confirm-message"></p>
+      <div class="confirm-buttons">
+        <button type="button" id="confirmOk" class="arrange-btn">YES</button>
+        <button type="button" id="confirmCancel" class="confirm-no-btn">NO</button>
+      </div>
+    </div>
   </dialog>
 
   <dialog id="nodePopup">
